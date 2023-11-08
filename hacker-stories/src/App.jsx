@@ -1,3 +1,4 @@
+import React from "react";
 
 
 
@@ -41,29 +42,36 @@ const List = (props) =>
   </ul>
 );
 
-const Item = (props) =>
-(
-  <li>
-    <a href={props.item.url}>{props.item.title}</a>
-    <span> {props.item.author}</span>
-    <span> {props.item.num_comments}</span>
-    <span> {props.item.points}</span>
-  </li>
+const Item = (props) => {
 
-);
+  return (
+    <li>
+      <a href={props.item.url}>{props.item.title}</a>
+      <span> {props.item.author}</span>
+      <span> {props.item.num_comments}</span>
+      <span> {props.item.points}</span>
+    </li>
 
+  );
+}
 
 const Search = () => {
+  const [searchTerm, setSearchTerm] = React.useState('');
   const handleChange = (event) => {
     //synthetic event
     console.log(event);
     //value of target (here: input HTML element)
+    setSearchTerm(event.target.value);
     console.log(event.target.value);
   }
   return (<div>
     <h1>My Hacker Stories</h1>
     <label htmlFor="search">Search: </label>
     <input id="search" type="text" onChange={handleChange} />
+
+    <p>
+      Searching for <strong>{searchTerm}</strong>.
+    </p>
   </div>
   )
 };
