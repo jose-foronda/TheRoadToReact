@@ -56,14 +56,21 @@ const List = ({ list }) =>
   </ul>
 );
 
-const Item = ({ item }) => {
+const Item = ({ item: {
+  title,
+  url,
+  author,
+  num_comments,
+  points
+}
+}) => {
 
   return (
     <li>
-      <a href={item.url}>{item.title}</a>
-      <span> {item.author}</span>
-      <span> {item.num_comments}</span>
-      <span> {item.points}</span>
+      <a href={url}>{title}</a>
+      <span> {author}</span>
+      <span> {num_comments}</span>
+      <span> {points}</span>
     </li>
 
   );
@@ -73,10 +80,10 @@ const Search = ({ search, onSearch }) => {
   return (<div>
     <label htmlFor="search">Search: </label>
     <input
-     id="search" 
-     type="text" 
-     value={search}
-     onChange={onSearch} />
+      id="search"
+      type="text"
+      value={search}
+      onChange={onSearch} />
   </div>
   )
 };
