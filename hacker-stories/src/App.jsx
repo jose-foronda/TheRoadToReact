@@ -50,21 +50,15 @@ const List = ({ list }) =>
 (
   <ul>
     {
-      list.map((item) =>
-        (<Item key={item.objectId} item={item} />))
+      list.map(({objectId, ...item}) =>
+        (<Item key={objectId} {...item}
+           />
+           ))
     }
   </ul>
 );
 
-const Item = ({ item: {
-  title,
-  url,
-  author,
-  num_comments,
-  points
-}
-}) => {
-
+const Item = ({ title, url, author, num_comments, points }) => {
   return (
     <li>
       <a href={url}>{title}</a>
