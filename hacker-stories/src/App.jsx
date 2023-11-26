@@ -1,7 +1,17 @@
 import React from "react";
 
 
+const useStorageState = (key, initialState) => {
 
+  const [value, setValue] = React.useState(localStorage.getItem(key) || initialState);
+
+  React.useEffect(() => {
+    localStorage.setItem(key, value);
+  }, [value, key]);
+
+  return [value, setValue]
+
+}
 
 const App = () => {
   const stories = [
@@ -23,11 +33,7 @@ const App = () => {
     },
   ];
 
-  const [searchTerm, setSearchTerm] = React.useState(localStorage.getItem('search') || 'React');
-
-  React.useEffect(() => {
-    localStorage.setItem('search', searchTerm);
-  }, [searchTerm])
+  const [searchTerm, setSearchTerm] = useStorageState('search', 'React');
 
   const handleSearch = (event) => {
     console.log("call back handler on App");
@@ -36,7 +42,7 @@ const App = () => {
   };
 
   const searchedStories = stories.filter(function (story) {
-    return story.title.includes(searchTerm);
+    return story.title.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
   return (
@@ -49,18 +55,21 @@ const App = () => {
   );
 }
 
+
+
+
 const List = ({ list }) =>
 (
   <ul>
     {
       list.map((item) =>
-        (<Item key={item.objectId} item={item} />
-           ))
+      (<Item key={item.objectId} item={item} />
+      ))
     }
   </ul>
 );
 
-const Item = ({item}) => {
+const Item = ({ item }) => {
   return (
     <li>
       <a href={item.url}>{item.title}</a>
